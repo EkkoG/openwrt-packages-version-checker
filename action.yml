@@ -42,4 +42,4 @@ runs:
         if [ -z $BRANCH ]; then
           BRANCH=main
         fi
-        git push --force --quiet "https://x-access-token:$COMMIT_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:$BRANCH
+        git push "https://x-access-token:$COMMIT_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:$BRANCH
