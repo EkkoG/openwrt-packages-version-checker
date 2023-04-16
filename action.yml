@@ -25,11 +25,11 @@ runs:
             hash=$(sha256sum output.tar.gz | cut -d " " -f 1)
             echo "New hash: $hash"
             ls
-            sed -i '' "s/PKG_HASH:=.*/PKG_HASH:=$hash/g" $MAKEFILE
+            sed -i "s/PKG_HASH:=.*/PKG_HASH:=$hash/g" $MAKEFILE
             rm output.tar.gz
 
             echo "Update to $latest_version"
-            sed -i '' "s/PKG_VERSION:=.*/PKG_VERSION:=$latest_version/g" $MAKEFILE
+            sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=$latest_version/g" $MAKEFILE
         fi
 
         git config user.name "bot"
