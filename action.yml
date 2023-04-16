@@ -24,7 +24,6 @@ runs:
             wget https://github.com/$REPO/archive/refs/tags/v$latest_version.tar.gz -O output.tar.gz
             hash=$(sha256sum output.tar.gz | cut -d " " -f 1)
             echo "New hash: $hash"
-            ls
             sed -i "s/PKG_HASH:=.*/PKG_HASH:=$hash/g" $MAKEFILE
             rm output.tar.gz
 
