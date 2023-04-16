@@ -7,7 +7,11 @@ runs:
     - name: Check
       shell: bash
       run: |
-        current_version=$(cat Makefile | grep PKG_VERSION | head -n 1 | cut -d "=" -f 2)
+        if [ -z $MAKEFILE ]; then
+          MAKEFILE=Makefile
+        fi
+
+        current_version=$(cat $MAKEFILE | grep PKG_VERSION | head -n 1 | cut -d "=" -f 2)
         echo "Current version: $current_version"
 
         latest_version=$(curl -s https://api.github.com/repos/$REPO/releases/latest | grep tag_name | cut -d '"' -f 4 | tr -d 'v')
@@ -19,11 +23,13 @@ runs:
         else
             wget https://github.com/$REPO/archive/refs/tags/v$latest_version.tar.gz -O output.tar.gz
             hash=$(sha256sum output.tar.gz | cut -d " " -f 1)
-            sed -i '' "s/PKG_HASH:=.*/PKG_HASH:=$hash/g" Makefile
+            echo "New hash: $hash"
+            ls
+            sed -i '' "s/PKG_HASH:=.*/PKG_HASH:=$hash/g" $MAKEFILE
             rm output.tar.gz
 
             echo "Update to $latest_version"
-            sed -i '' "s/PKG_VERSION:=.*/PKG_VERSION:=$latest_version/g" Makefile
+            sed -i '' "s/PKG_VERSION:=.*/PKG_VERSION:=$latest_version/g" $MAKEFILE
         fi
 
         git config user.name "bot"
