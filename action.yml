@@ -22,6 +22,7 @@ runs:
         latest_version=$(curl -s "$url" | jq -r '.[0].tag_name')
         echo "Latest version: $latest_version"
         latest_version_number=$(echo $latest_version | cut -d "v" -f 2)
+        echo "Latest version number: $latest_version_number"
 
         if [ "$current_version" = "$latest_version_number" ]; then
             echo "No update"
