@@ -28,4 +28,5 @@ jobs:
           REPO: Dreamacro/clash
           BRANCH: main
           MAKEFILE: Makefile
+          INCLUDE_PRE_RELEASE: true
 ```
