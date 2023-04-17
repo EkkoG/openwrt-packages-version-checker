@@ -15,7 +15,7 @@ runs:
         echo "Current version: $current_version"
 
         url="https://api.github.com/repos/$REPO/releases/latest"
-        if [ -z $INCLUDE_PRE_RELEASE ]; then
+        if [ ! -z $INCLUDE_PRE_RELEASE ]; then
           url="https://api.github.com/repos/$REPO/releases?per_page=1"
         fi
         echo "URL: $url"
