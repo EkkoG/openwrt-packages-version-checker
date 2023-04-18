@@ -21,7 +21,14 @@ runs:
           jq_expr='.[0].tag_name'
         fi
         echo "URL: $url"
-        latest_version=$(curl -s "$url" | jq -r $jq_expr)
+        resp=$(curl -s "$url")
+        echo "Response: $resp"
+        latest_version=$(echo "$resp" | jq -r $jq_expr)
+        if [ $latest_version = "null" ]; then
+          echo "No release found"
+          exit 0
+        fi
+
         echo "Latest version: $latest_version"
         latest_version_number=$(echo $latest_version | cut -d "v" -f 2)
         echo "Latest version number: $latest_version_number"
