@@ -6,8 +6,6 @@ runs:
   steps:
     - name: Check
       shell: bash
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ -z $MAKEFILE ]; then
           MAKEFILE=Makefile
