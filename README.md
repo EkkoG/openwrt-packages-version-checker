@@ -29,4 +29,5 @@ jobs:
           BRANCH: main
           MAKEFILE: Makefile
           INCLUDE_PRE_RELEASE: true
+          CREATE_PR: true
 ```

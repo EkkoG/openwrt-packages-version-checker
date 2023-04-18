@@ -6,6 +6,8 @@ runs:
   steps:
     - name: Check
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         if [ -z $MAKEFILE ]; then
           MAKEFILE=Makefile
@@ -55,8 +57,17 @@ runs:
           echo "No changes to commit"
           exit 0
         fi
-        git commit -m "$(TZ='Asia/Shanghai' date +@%Y%m%d) Bump $REPO to $latest_version"
+
         if [ -z $BRANCH ]; then
           BRANCH=main
         fi
-        git push "https://x-access-token:$COMMIT_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:$BRANCH
+
+        git commit -m "$(TZ='Asia/Shanghai' date +@%Y%m%d) Bump $REPO to $latest_version"
+
+        if [ ! -z $CREATE_PR ]; then
+          PR_BRANCH="auto-update/$REPO-$latest_version"
+          git push "https://x-access-token:$COMMIT_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:$PR_BRANCH
+          gh pr create --title "Bump $REPO to $latest_version" --body "Bump $REPO to $latest_version" --base $BRANCH --head $PR_BRANCH
+        else
+          git push "https://x-access-token:$COMMIT_TOKEN@github.com/$GITHUB_REPOSITORY" HEAD:$BRANCH
+        fi
