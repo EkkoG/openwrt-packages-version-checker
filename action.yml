@@ -6,6 +6,8 @@ runs:
   steps:
     - name: Check
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ env.COMMIT_TOKEN }}
       run: |
         if [ -z $MAKEFILE ]; then
           MAKEFILE=Makefile
