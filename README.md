@@ -25,9 +25,10 @@ jobs:
       - uses: EkkoG/openwrt-packages-version-checker@main
         env:
           COMMIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: Dreamacro/clash
+          REPO: heiher/natmap
           BRANCH: main
           MAKEFILE: Makefile
           INCLUDE_PRE_RELEASE: true
           CREATE_PR: true
+          SOURCE_URL: https://github.com/heiher/natmap/releases/download/{{version}}/natmap-{{version}}.tar.gz
 ```
