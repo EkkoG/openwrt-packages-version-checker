@@ -26,6 +26,8 @@ echo "Latest version number: $latest_version_number"
 if [ -z $SOURCE_URL ]; then
     SOURCE_URL="https://github.com/$REPO/archive/refs/tags/$latest_version.tar.gz"
 else
+    # https://github.com/EkkoG/openwrt-natmap/blob/af5b8ccfac6cbd8a2ce44b674920174b847101a8/.github/workflows/check.yml#L23
+    # 用处理作版本号不在约定位置的情况
     SOURCE_URL=$(echo $SOURCE_URL | sed "s/{{version}}/$latest_version_number/g")
 fi
 
